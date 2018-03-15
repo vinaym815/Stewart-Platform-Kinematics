@@ -1,4 +1,4 @@
-# Stewart-Platform-Kinmatics
+# Stewart-Platform-Kinematics
 
 This script performs the forward kinematics of stewart platform using an
 algorithm that employs newton raphson methods, inverse kinematics and screws.
