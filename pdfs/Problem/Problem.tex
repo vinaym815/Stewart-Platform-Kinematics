@@ -1,0 +1,42 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,width=140mm, top=30mm, bottom=30mm]{geometry}
+\usepackage{graphicx}
+\usepackage{caption}
+
+%opening
+\title{MCL-745: Parallel Robotics Lab Sheet}
+\author{S. Mukherjee}
+
+\begin{document}
+
+\maketitle
+Consider the Alea robot with the following setup
+
+\begin{center}
+\begin{tabular}{c c c c c c c c c c}
+	\hline 
+	&  &  &  & Leg1 & Leg2 & Leg3 & Leg4 & Leg5 & Leg6 \\ 
+	\hline 
+	Roll & 0 &  & Px & 100 & 50 & -87 & -100 & -50 & 87 \\ 
+	Pitch & 0 &  & Py & 0 & 87 & 50 & 0 & -87 & -50 \\ 
+	Yaw & 0 &  & Pz & 0 & 0 & 0 & 0 & 0 & 0 \\ 
+	X & 0 &  & Bx & 150 & 75 & -130 & -150 & -75 & 130 \\ 
+	Y & 0 &  & By & 0 & 130 & 75 & 0 & -130 & -75 \\ 
+	Z & 300 &  & Bz & 0 & 0 & 0 & 0 & 0 & 0 \\ 
+	\hline 
+\end{tabular} 
+\end{center}
+
+\vspace{15mm}
+
+
+Do the following:
+\begin{itemize}
+	\item Find out the leg lengths.
+	\item Compute the kinematic Jacobean.
+	\item Compute the determinant of the kinematic Jacobean.
+	\item Find the position of the platform by using the Jacobian if lengths of legs 2, 3 and  6 are increased by 5\% in steps of 1 \%.
+	\item Compare the leg lengths at each step with that obtained by the Jacobian.
+\end{itemize}
+
+\end{document}

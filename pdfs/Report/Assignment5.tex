@@ -1,0 +1,375 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper, total={6.5in, 9in}]{geometry}
+
+\usepackage{listings}
+\usepackage{amsmath}
+%\usepackage{graphicx}
+%\setlength{\parindent}{0pt}
+
+\usepackage{color}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{Assignment 5}
+\author{Vinay K.\\
+2016MEZ8353}
+
+
+\begin{document}
+
+\maketitle
+
+\textbf{Ans 1:} Leg lengths for Initial platform pose are listed in Table \ref{InLegLn}
+\begin{table}[h!]
+	\caption{Leg Lengths for initial platform configuration}
+	\label{InLegLn}
+	\centering
+	\begin{tabular}{cc}
+		\hline
+		Leg Lengths  &  $mm$\\
+		\hline
+		$L_1$ &   304.1381\\
+		$L_2$ &   304.0954\\
+		$L_3$ &   304.0954\\
+		$L_4$ &   304.1381\\
+		$L_5$ &   304.0954\\
+		$L_6$ &   304.0954\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{Ans 2:} The expression for Force Jacobian is derived by force balance equation along the end effector and is given by $$[J_F]*[\tau] = F$$ where $\tau$ is the vector of actuation forces and $F$ is the wrench acting on the end effector. Force Jacobian consists of screws corresponding to each leg stacked vertically, and for initial platform pose is given by:
+
+\begin{equation*}
+J_F = \begin{bmatrix}
+-0.1644	&	-0.0822		& 0.1414  &  0.1644  &  0.0822  & -0.1414  \\
+0		&	-0.1414		& -0.0822 &        0 &   0.1414 &   0.0822 \\
+0.9864	&	0.9865		& 0.9865  &  0.9864  &  0.9865  &  0.9865  \\
+0		&	85.8283     & 49.3266 &        0 & -85.8283 & -49.3266 \\
+-98.6394&	-49.3266    & 85.8283 &  98.6394 &  49.3266 & -85.8283 \\
+0		&	0.0822      & 0.0822  &       0  &  0.0822  &  0.0822
+\end{bmatrix}
+\end{equation*}
+
+Kinematic Jacobian is given by expressions
+\begin{align*}
+J_K*\dot{L}&=\dot{X}\\
+J_K & = {{J_F}^T}^{-1} 
+\end{align*} 
+where $\dot{L}$ is the vector of actuation velocities and $\dot{X}$ is end effector twist. For the initial configuration of platform, kinematic Jacobian do not exists, as the Force Jacobian in singular.
+
+\vspace{4mm}
+\textbf{Ans 3:} As kinematic Jacobian do not exists, its determinant cannot be computed, however the determinant of its inverse is zero i.e. $$ det({J_F}^T) = 0 $$.
+
+
+\textbf{Ans 4:} Initial platform pose given in the problem is singular, and remove this singularity a slightly perturbed platform pose was used. Platform pose and leg lengths obtained from \textbf{newton raphson} (tolerance 1e-4) for 0\%, 1\%, 2\%, 3\%, 4\% \& 5\% increase in leg lengths (leg2, leg3 \& leg6)are given in Tables 2-7.
+
+\vspace{4mm}
+\textbf{Ans 5:} Initial platform pose given in the problem is singular, and remove this singularity a slightly perturbed platform pose was used. Platform pose and leg lengths obtained from \textbf{jacobian} (using steps 0.1\%) for 0\%, 1\%, 2\%, 3\%, 4\% \& 5\% increase in leg lengths (leg2, leg3 \& leg6)are given in Tables 8-14.
+
+\pagebreak
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+	$\begin{bmatrix}
+	0.9397  & 0.1170 & 0.3214  & 0        \\ 
+	0       & 0.9397 & -0.3420 & 0        \\ 
+	-0.3420 & 0.3214 & 0.8830  & 300.0000 \\ 
+	0       & 0      & 0       & 1.0000   \\ 
+	\end{bmatrix}$
+	 & 
+	 	\begin{tabular}{cccc}
+	 	\hline
+	 	Symbol & Value ($mm$) & Symbol & Value(mm) \\
+	 	\hline
+	 	$L_1$ & 271.6395 & $L_4$ & 338.8664\\
+	 	$L_2$ & 315.0874 & $L_5$ & 293.6797\\
+	 	$L_3$ & 351.1502 & $L_6$ & 261.3731\\	 	\hline
+	 \end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths in the initial configuration}
+\end{table*}
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+		0.9246  & 0.2289 & 0.3046  & -16.7505 \\ 
+		-0.0199 & 0.8274 & -0.5613 & 65.2909  \\ 
+		-0.3805 & 0.5129 & 0.7695  & 291.5515 \\ 
+		0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6395 & $L_4$ & 338.8664\\
+			$L_2$ & 318.2382 & $L_5$ & 293.6797\\
+			$L_3$ & 354.6617 & $L_6$ & 263.9868\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths for 1\% increase in leg lengths}
+\end{table*}
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+		0.9121  & 0.2479 & 0.3265  & -12.4800 \\ 
+		0.0539  & 0.7171 & -0.6949 & 94.3650  \\ 
+		-0.4064 & 0.6514 & 0.6407  & 283.0403 \\ 
+		0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6395 & $L_4$ & 338.8664\\
+			$L_2$ & 321.3891 & $L_5$ & 293.6797\\
+			$L_3$ & 358.1732 & $L_6$ & 266.6006\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths for 2\% increase in leg lengths}
+\end{table*}
+
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+		0.8979  & 0.2607 & 0.3546  & 1.1437   \\ 
+		0.1347  & 0.6042 & -0.7854 & 107.5242 \\ 
+		-0.4190 & 0.7530 & 0.5074  & 277.8214 \\ 
+		0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6395 & $L_4$ & 338.8664\\
+			$L_2$ & 324.5400 & $L_5$ & 293.6797\\
+			$L_3$ & 361.6847 & $L_6$ & 269.2143\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths for 3\% increase in leg lengths}
+\end{table*}
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+		0.8820  & 0.2731 & 0.3842  & 19.7441  \\ 
+		0.2169  & 0.4885 & -0.8452 & 112.3835 \\ 
+		-0.4184 & 0.8288 & 0.3716  & 274.3136 \\ 
+		0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6395 & $L_4$ & 338.8664\\
+			$L_2$ & 327.6909 & $L_5$ & 293.6797\\
+			$L_3$ & 365.1962 & $L_6$ & 271.8280\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths for 4\% increase in leg lengths}
+\end{table*}
+
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+		0.8640  & 0.2858 & 0.4146  & 41.6056  \\ 
+		0.2997  & 0.3698 & -0.8795 & 111.9282 \\ 
+		-0.4047 & 0.8841 & 0.2339  & 271.0524 \\ 
+		0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6395 & $L_4$ & 338.8664\\
+			$L_2$ & 330.8417 & $L_5$ & 293.6797\\
+			$L_3$ & 368.7077 & $L_6$ & 274.4418\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths for 5\% increase in leg lengths}
+\end{table*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagebreak
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+		0.9397  & 0.1170 & 0.3214  & 0        \\ 
+		0       & 0.9397 & -0.3420 & 0        \\ 
+		-0.3420 & 0.3214 & 0.8830  & 300.0000 \\ 
+		0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6395 & $L_4$ & 338.8664\\
+			$L_2$ & 315.0874 & $L_5$ & 293.6797\\
+			$L_3$ & 351.1502 & $L_6$ & 261.3731\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths in the initial configuration}
+\end{table*}
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+0.9246  & 0.2291 & 0.3045  & -16.8387 \\ 
+-0.0200 & 0.8272 & -0.5615 & 65.4841  \\ 
+-0.3805 & 0.5131 & 0.7694  & 291.5388 \\ 
+0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6966 & $L_4$ & 338.8812\\
+			$L_2$ & 318.2533 & $L_5$ & 293.7445\\
+			$L_3$ & 354.6646 & $L_6$ & 264.0679\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths for 1\% increase in leg lengths}
+\end{table*}
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+		0.9121  & 0.2479 & 0.3265  & -12.5145 \\ 
+		0.0539  & 0.7170 & -0.6950 & 94.4465  \\ 
+		-0.4064 & 0.6515 & 0.6406  & 283.0216 \\ 
+		0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6635 & $L_4$ & 338.8634\\
+			$L_2$ & 321.3879 & $L_5$ & 293.7054\\
+			$L_3$ & 358.1639 & $L_6$ & 266.6381\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths for 2\% increase in leg lengths}
+\end{table*}
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+		0.8979  & 0.2607 & 0.3546  & 1.1263   \\ 
+		0.1347  & 0.6041 & -0.7854 & 107.5674 \\ 
+		-0.4190 & 0.7530 & 0.5073  & 277.8118 \\ 
+		0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6554 & $L_4$ & 338.8649\\
+			$L_2$ & 324.5390 & $L_5$ & 293.6971\\
+			$L_3$ & 361.6790 & $L_6$ & 269.2389\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths for 3\% increase in leg lengths}
+\end{table*}
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+		0.8820  & 0.2731 & 0.3842  & 19.7332  \\ 
+		0.2169  & 0.4884 & -0.8452 & 112.4111 \\ 
+		-0.4184 & 0.8288 & 0.3715  & 274.3113 \\ 
+		0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6532 & $L_4$ & 338.8687\\
+			$L_2$ & 327.6925 & $L_5$ & 293.6953\\
+			$L_3$ & 365.1950 & $L_6$ & 271.8477\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths for 4\% increase in leg lengths}
+\end{table*}
+
+\begin{table*}[h!]
+	\centering
+	\begin{tabular}{cc}
+		$\begin{bmatrix}
+		0.8640  & 0.2858 & 0.4146  & 41.5972  \\ 
+		0.2997  & 0.3698 & -0.8795 & 111.9487 \\ 
+		-0.4047 & 0.8841 & 0.2338  & 271.0561 \\ 
+		0       & 0      & 0       & 1.0000   \\ 
+		\end{bmatrix}$
+		& 
+		\begin{tabular}{cccc}
+			\hline
+			Symbol & Value ($mm$) & Symbol & Value(mm) \\
+			\hline
+			$L_1$ & 271.6529 & $L_4$ & 338.8726\\
+			$L_2$ & 330.8462 & $L_5$ & 293.6957\\
+			$L_3$ & 368.7108 & $L_6$ & 274.4592\\	 	\hline
+		\end{tabular}
+	\end{tabular}
+	\caption{Platform pose and Leg Lengths for 5\% increase in leg lengths}
+\end{table*}
+
+\pagebreak
+\lstinputlisting[language=Matlab, label = code1,caption = Matalb Code for Problems 1--3]{Assignement.m}
+\pagebreak
+\lstinputlisting[language=Matlab, label = code1,caption = Matalb Code for Forward Dynamics using Newton Raphson]{Assign4.m}
+\pagebreak
+\lstinputlisting[language=Matlab, label = code1,caption = Matalb Code for Forward Dynamics using Newton Raphson]{assign3.m}
+\pagebreak
+\lstinputlisting[language=Matlab, label = code1,caption = Matalb Code for Problems 4 \& 5]{NewOri.m}
+\end{document}
